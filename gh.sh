@@ -88,13 +88,14 @@ git_operation() {
   fi
 
   
-  git commit -a -m "task_${task_name}: Save commit"
+  
   case "$operation" in
     feature|hotfix|release)
       if [[ -z "$task_name" ]]; then
         printf "Tên branch không được để trống.\n" >&2
         return 1
       fi
+      git commit -a -m "task_${task_name}: Save commit"
       git checkout $main_branch
       git pull
       local new_branch="${operation}_${username}/task_${task_name}"
@@ -108,6 +109,7 @@ git_operation() {
         printf "Tên branch không được để trống.\n" >&2
         return 1
       fi
+      git commit -a -m "task_${task_name}: Save commit"
       git checkout $dev_branch
       git pull
       local new_branch="${operation}_${username}/task_${task_name}"
