@@ -119,7 +119,7 @@ git_operation() {
     finish)
       git add ${CURRENT_DIR}
       git commit -a -m "task_${task_name}: Save commit"
-      local current_branch =$(git branch --show-current)
+      local current_branch=$(git branch --show-current)
       git push origin "$current_branch"
       ;;
     *)
