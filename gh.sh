@@ -117,6 +117,10 @@ git_operation() {
       fi
       ;;
     finish)
+      if [[ -z "$task_name" ]]; then
+        printf "Message không được để trống.\n" >&2
+        return 1
+      fi
       git add ${CURRENT_DIR}
       git commit -a -m "task_${task_name}: Save commit"
       local current_branch=$(git branch --show-current)
