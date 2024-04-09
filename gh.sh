@@ -154,7 +154,7 @@ checkout() {
   fi
 
   git commit -a -m "redirect: Commit to redirect ${branch}"
-  git push origin "${$current_branch}"
+  git push origin "${current_branch}"
 
   git checkout "$branch"
 
