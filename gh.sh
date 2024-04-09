@@ -4,6 +4,11 @@
 CONFIG_FILE="$HOME/.gh/conf.conf"
 CURRENT_DIR="$(pwd)"
 
+if [[ "$(uname -s)" != "Darwin" ]]; then
+    echo "gh is only supported on macOS"
+    exit 1
+fi
+
 # Hàm hiển thị trợ giúp
 show_help() {
   printf "Các câu lệnh có thể thực hiện được với gh:\n"
@@ -12,7 +17,7 @@ show_help() {
   printf " - gh hotfix xxx: tạo branch để hotfix\n"
   printf " - gh release xxx: resolve conflict từ master\n"
   printf " - gh testing xxx: resolve conflict từ develop\n"
-  printf " - gh finish: Kết thúc\n"
+  printf " - gh finish: Kết thúc flow\n"
   printf " - gh setup: cấu hình sử dụng\n"
 }
 
@@ -68,9 +73,7 @@ get_dev_branch() {
 git_operation() {
   local operation=$1
   local task_name=$2
-  local merge_branch=$3
-
-  
+  local merge_branch=$3 
 
   local username=$(get_username)
   if [[ $? -ne 0 ]]; then
