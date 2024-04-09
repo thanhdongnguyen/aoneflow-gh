@@ -18,6 +18,7 @@ show_help() {
   printf " - gh release xxx: resolve conflict từ master\n"
   printf " - gh testing xxx: resolve conflict từ develop\n"
   printf " - gh finish: Kết thúc flow\n"
+  printf " - gh checkout xxx: Checkout sang 1 branch khác\n"
   printf " - gh setup: cấu hình sử dụng\n"
 }
 
@@ -138,6 +139,29 @@ git_operation() {
   esac
 }
 
+checkout() {
+  local branch=$1
+  local current_branch=$(git branch --show-current)
+  local check_branch=$(git branch --list | grep "$branch")
+
+  if [[ -z "$check_branch" ]]; then
+    echo "Branch ${branch} not exist"
+    exit 1
+  fi
+
+  if [[ -z "$branch" ]]; then
+    printf "Branch name is required.\n" >&2
+    return 1
+  fi
+
+  git commit -a -m "redirect: Commit to redirect ${branch}"
+  git push origin "${current_branch}"
+
+  git checkout "$branch"
+
+  echo "Checkout success"
+}
+
 # Xử lý dòng lệnh
 case "$1" in
   help)
@@ -152,6 +176,9 @@ case "$1" in
   feature|hotfix|release|testing|finish)
     git_operation "$1" "$2" "$3"
     ;;
+  checkout)
+    checkout "$2"
+  ;;
   *)
     show_help
     ;;
