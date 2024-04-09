@@ -18,6 +18,7 @@ show_help() {
   printf " - gh release xxx: resolve conflict từ master\n"
   printf " - gh testing xxx: resolve conflict từ develop\n"
   printf " - gh finish: Kết thúc flow\n"
+  printf " - gh checkout xxx: Checkout sang 1 branch khác\n"
   printf " - gh setup: cấu hình sử dụng\n"
 }
 
