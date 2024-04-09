@@ -10,6 +10,13 @@ if [[ "$(uname -s)" != "Darwin" ]]; then
     exit 1
 fi
 
+init() {
+    if [[ ! -e "/tmp" ]]; then
+        echo "Folder /tmp not exist"
+        exit 1;
+    fi
+}
+
 clean() {
     echo "Clean file temp"
     rm -rf 
@@ -28,9 +35,15 @@ download() {
     chmod +x "${TEMP_PATH}"
     echo "Copy path to bin"
     sudo mv "${TEMP_PATH}" "${BIN_PATH}"
+
+    if [[ ! -x "${BIN_PATH}" ]]; then
+     chmod +x "${BIN_PATH}"
+    fi
+
     echo "Copy success to bin"
 }
 
+init
 check_exist
 download
 clean
